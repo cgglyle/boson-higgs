@@ -1,4 +1,4 @@
-package io.github.cgglyle.boson.higgs.service;
+package io.github.cgglyle.boson.higgs.api;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -22,12 +22,12 @@ public interface BaseService<T> extends IService<T> {
     boolean save(T entity);
 
     /**
-     * 根据wrapper更新一个数据
+     * 根据ID删除一条数据
      *
-     * @param wrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper}
+     * @param id 主键id
      * @return <code>true</code>成功<br><code>false</code>失败
      */
-    boolean update(Wrapper<T> wrapper);
+    boolean removeById(Serializable id);
 
     /**
      * 根据实体更新一条数据
@@ -38,10 +38,10 @@ public interface BaseService<T> extends IService<T> {
     boolean updateById(T entity);
 
     /**
-     * 根据ID删除一条数据
+     * 根据wrapper更新一个数据
      *
-     * @param id 主键id
+     * @param wrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper}
      * @return <code>true</code>成功<br><code>false</code>失败
      */
-    boolean removeById(Serializable id);
+    boolean update(Wrapper<T> wrapper);
 }

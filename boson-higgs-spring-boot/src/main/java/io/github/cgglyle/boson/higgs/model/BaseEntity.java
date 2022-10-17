@@ -30,17 +30,9 @@ public abstract class BaseEntity implements Serializable {
     @TableField(value = "create_time", fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
-    @Schema(description = "更新时间")
-    @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
-    private LocalDateTime updateTime;
-
     @Schema(description = "创建用户名")
     @TableField(value = "create_user_name", fill = FieldFill.INSERT)
     private String createUserName;
-
-    @Schema(description = "更新用户名")
-    @TableField(value = "update_user_name", fill = FieldFill.INSERT_UPDATE)
-    private String updateUserName;
 
     @Schema(description = "状态值('false'=>正常，'ture'=>异常)")
     @TableField("is_status")

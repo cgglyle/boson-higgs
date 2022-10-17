@@ -14,15 +14,18 @@
  * limitations under the License.
  */
 
-package io.github.cgglyle.boson.higgs.service.impl;
+package io.github.cgglyle.boson.higgs.service;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import io.github.cgglyle.boson.higgs.api.BaseService;
 import io.github.cgglyle.boson.higgs.api.Username;
 import io.github.cgglyle.boson.higgs.model.BaseEntity;
-import io.github.cgglyle.boson.higgs.service.BaseService;
+import io.github.cgglyle.boson.higgs.model.BaseUpdateEntity;
+import io.github.cgglyle.boson.higgs.model.BaseUserEntity;
+import io.github.cgglyle.boson.higgs.model.BaseUserUpdateEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.Nullable;
 
@@ -59,11 +62,23 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity>
      * @param entity 实体
      * @return <code>true</code>成功<br><code>false</code>失败
      */
+    @SuppressWarnings("unchecked")
     @Override
     public boolean updateById(T entity) {
-        entity.setUpdateTime(LocalDateTime.now());
-        if (username != null) {
-            entity.setUpdateUserName(username.getUsername());
+        if (entity instanceof BaseUserUpdateEntity tempEntity) {
+            tempEntity.setUpdateTime(LocalDateTime.now());
+            if (username != null) {
+                tempEntity.setUpdateUserName(username.getUsername());
+            }
+            return super.updateById((T) tempEntity);
+        }
+        if (entity instanceof BaseUpdateEntity tempEntity) {
+            tempEntity.setUpdateTime(LocalDateTime.now());
+            return super.updateById((T) tempEntity);
+        }
+        if (username != null && entity instanceof BaseUserEntity tempEntity) {
+            tempEntity.setUpdateUserName(username.getUsername());
+            return super.updateById((T) tempEntity);
         }
         return super.updateById(entity);
     }
